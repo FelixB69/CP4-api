@@ -4,18 +4,6 @@ const Joi = require('joi');
 const app = express();
 app.use(express.json());
 
-const items = [
-  { id: 1, name: 'item1' },
-  { id: 2, name: 'item2' },
-];
-
-app.get('/', (req, res) => res.send('Hello Thierno'));
-
-app.get('/things', (req, res) => {
-  console.log('handling GET /things');
-  res.send(items);
-});
-
 // FAIRE AFFICHER TOUS LES PRODUITS
 app.get('/quotes', async (req, res) => {
   try {
