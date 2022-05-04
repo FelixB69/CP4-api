@@ -98,9 +98,9 @@ app.get('/gifs/:id', (req, res) => {
     (err, result) => {
       if (err) {
         console.error(err);
-        res.status(500).send('Error retrieving quote from database');
+        res.status(500).send('Error retrieving gif from database');
       } else if (result.length === 0) {
-        res.status(404).send('Quote not found');
+        res.status(404).send('Gif not found');
       } else {
         res.json(result[0]);
       }
@@ -114,7 +114,7 @@ app.post('/gifs', async (req, res) => {
     const { name, gif } = req.body;
     const { error: validationErrors } = Joi.object({
       name: Joi.string().max(50).required(),
-      gif: Joi.string().min(0).required(),
+      gif: Joi.string().max(200).required(),
     }).validate({ name, gif }, { abortEarly: false });
 
     if (validationErrors) {
@@ -122,7 +122,7 @@ app.post('/gifs', async (req, res) => {
     }
     const [{ insertId }] = await db
       .promise()
-      .query('INSERT INTO quotes (name, gif) VALUES (?, ?)', [name, gif]);
+      .query('INSERT INTO gifs (name, gif) VALUES (?, ?)', [name, gif]);
 
     res.status(201).send({ id: insertId, name, gif });
   } catch (err) {
@@ -134,18 +134,14 @@ app.post('/gifs', async (req, res) => {
 
 app.delete('/gifs/:id', (req, res) => {
   const gifsId = req.params.id;
-  connection.query(
-    'DELETE FROM quotes WHERE id = ?',
-    [gifsId],
-    (err, result) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send('Error deleting a quote');
-      } else {
-        res.sendStatus(204);
-      }
+  connection.query('DELETE FROM gifs WHERE id = ?', [gifsId], (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Error deleting a gif');
+    } else {
+      res.sendStatus(204);
     }
-  );
+  });
 });
 
 db.connect((err) => {
