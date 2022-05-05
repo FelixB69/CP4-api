@@ -82,7 +82,9 @@ app.delete('/quotes/:id', (req, res) => {
 // FAIRE AFFICHER LES GIFS
 app.get('/gifs', async (req, res) => {
   try {
-    const [gifs] = await db.promise().query('SELECT * FROM gifs');
+    const [gifs] = await db
+      .promise()
+      .query('SELECT * FROM `gifs` ORDER BY ID DESC LIMIT 6');
     res.send(gifs);
   } catch (err) {
     console.error(err);
@@ -131,7 +133,6 @@ app.post('/gifs', async (req, res) => {
   }
 });
 // SUPPRIMER UN GIF AVEC DELETE
-
 app.delete('/gifs/:id', (req, res) => {
   const gifsId = req.params.id;
   connection.query('DELETE FROM gifs WHERE id = ?', [gifsId], (err, result) => {
