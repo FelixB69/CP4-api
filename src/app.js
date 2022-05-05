@@ -144,7 +144,4 @@ app.delete('/gifs/:id', (req, res) => {
   });
 });
 
-db.connect((err) => {
-  if (err) console.error('error connecting to db');
-});
 module.exports.app = app;
