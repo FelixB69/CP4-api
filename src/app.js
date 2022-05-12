@@ -100,4 +100,18 @@ app.delete('/point/:id', (req, res) => {
   );
 });
 
+app.get('/category-point/:categories', (req, res) => {
+  console.log(req.params);
+  connection
+    .promise()
+    .query('SELECT * FROM point WHERE categorie = ?', req.params.categories)
+    .then((result) => {
+      res.status(200).send(result[0]);
+      console.log(result[0]);
+    })
+    .catch((er) => {
+      console.log(er);
+    });
+});
+
 module.exports.app = app;
