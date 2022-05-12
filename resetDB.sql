@@ -60,10 +60,11 @@ VALUES ('Recup Verre', 'Verre', 'Rue Henri Gorjus', '69004', 'Lyon 4e Arrondisse
 ('Bornes à compost', 'Compost', '24 Rue Professeur Grignard', '69007', 'Lyon 7e Arrondissement', '45.747730319803', '4.83717973065131'),
 ('Bornes à compost', 'Compost', '2 Rue Professeur Zimmermann', '69007', 'Lyon 7e Arrondissement', '45.7457919394771', '4.83673934925777'),
 ('Bornes à compost', 'Compost', '131 Rue d Anvers', '69007', 'Lyon 7e Arrondissement', '45.7472437991674', '4.83925248063232'),
-('Déchèterie-donnerie fluviale de Lyon 5', 'Dechetterie', 'Quai Fulchiron', '69005', 'Lyon 5e Arrondissement', '45.7597592', '4.8279245'),
-('Déchèterie de Lyon-Artillerie', 'Dechetterie', '12 Bd de l Artillerie', '69007', 'Lyon 7e Arrondissement', '45.7354501', '4.8428992'),
-('Déchèterie - donnerie de Villeurbanne Kruger - Vaise', 'Dechetterie', '100 Av. Paul Kruger', '69100', 'Villeurbanne', '45.7549408', '4.9001652'),
-('Déchèterie de Villeurbanne Brinon - Vaise', 'Dechetterie', 'Rue Alfred Brinon', '69100', 'Villeurbane', '45.7769660949707', '4.894371509552002'),
+('Déchèterie-donnerie fluviale de Lyon 5', 'Decheterie', 'Quai Fulchiron', '69005', 'Lyon 5e Arrondissement', '45.7597592', '4.8279245'),
+('Déchèterie de Lyon-Artillerie', 'Decheterie', '12 Bd de l Artillerie', '69007', 'Lyon 7e Arrondissement', '45.7354501', '4.8428992'),
+('Déchèterie - donnerie de Lyon - Vaise', 'Decheterie', '82 Av. Sidoine Apollinaire', '69009', 'Lyon 9e Arrondissement', '45.7354501', '4.8428992'),
+('Déchèterie - donnerie de Villeurbanne Kruger - Vaise', 'Decheterie', '100 Av. Paul Kruger', '69100', 'Villeurbanne', '45.7549408', '4.9001652'),
+('Déchèterie de Villeurbanne Brinon - Vaise', 'Decheterie', 'Rue Alfred Brinon', '69100', 'Villeurbane', '45.7769660949707', '4.894371509552002'),
 ('Collecte vetements', 'Vetements', 'cours Lafayette', '69006', 'Lyon 6e Arrondissement', '45.763737', '4.841366'),
 ('Collecte vetements', 'Vetements', 'place Tabareau', '69004', 'Lyon 4e Arrondissement', '45.774626', '4.826583'),
 ('Collecte vetements', 'Vetements', 'rue Bony', '69004', 'Lyon 4e Arrondissement', '45.772335', '4.818651'),
@@ -71,4 +72,3 @@ VALUES ('Recup Verre', 'Verre', 'Rue Henri Gorjus', '69004', 'Lyon 4e Arrondisse
 ('Collecte vetements', 'Vetements', '5 avenue Antoine Dutrievoz', '69100', 'Villeurbanne', '45.771485', '4.861779'),
 ('Collecte vetements', 'Vetements', '5 place Abbé Larue', '69005', 'Lyon 5e Arrondissement', '45.755201', '4.819958'),
 ('Collecte vetements', 'Vetements', ' 13 rue Louis Loucheur', '69009', 'Lyon 9e Arrondissement', '45.768051', '4.802929');
-
