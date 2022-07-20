@@ -1,29 +1,29 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable camelcase */
 const express = require('express');
 const cors = require('cors');
 const db = require('./db');
-const Joi = require('joi');
 const connection = require('./db');
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-// FAIRE AFFICHER LES POINT
-app.get('/point', async (req, res) => {
+// FAIRE AFFICHER LES SMARTPHONES
+app.get('/phone', async (req, res) => {
   try {
-    const [point] = await db.promise().query('SELECT * FROM point');
-    res.send(point);
+    const [phone] = await db.promise().query('SELECT * FROM phone');
+    res.send(phone);
   } catch (err) {
     console.error(err);
     res.status(500).send('something wrong happened');
   }
 });
 
-app.get('/point/:id', (req, res) => {
-  const pointId = req.params.id;
+app.get('/phone/:id', (req, res) => {
+  const phoneId = req.params.id;
   connection.query(
-    'SELECT * FROM point WHERE id = ?',
-    [pointId],
+    'SELECT * FROM phone WHERE id = ?',
+    [phoneId],
     (err, result) => {
       if (err) {
         console.error(err);
@@ -37,81 +37,81 @@ app.get('/point/:id', (req, res) => {
   );
 });
 
-// AJOUTER UN POINT AVEC POST
-app.post('/point', async (req, res) => {
+// AJOUTER UN SMARTPHONE AVEC POST
+app.post('/phone', async (req, res) => {
   try {
-    const { nom, categorie, voie, code_postal, commune, lat, lon, info } =
-      req.body;
-    const { error: validationErrors } = Joi.object({
-      nom: Joi.string().max(50).required(),
-      categorie: Joi.string().max(50).required(),
-      voie: Joi.string().max(200).required(),
-      code_postal: Joi.string().max(10).required(),
-      commune: Joi.string().max(50).required(),
-      lat: Joi.string().max(30).required(),
-      lon: Joi.string().max(30).required(),
-      info: Joi.string().max(300),
-    }).validate(
-      { nom, categorie, voie, code_postal, commune, lat, lon, info },
-      { abortEarly: false }
-    );
-
-    if (validationErrors) {
-      return res.status(422).json({ errors: validationErrors.details });
-    }
-    const [{ insertId }] = await db
+    const {
+      nom,
+      marque,
+      note,
+      prix,
+      ecran,
+      image,
+      photo,
+      indice,
+      utilisation,
+      eco,
+    } = req.body;
+    const [{ insertId: id }] = await db
       .promise()
       .query(
-        'INSERT INTO point (nom, categorie, voie, code_postal, commune, lat, lon, info) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-        [nom, categorie, voie, code_postal, commune, lat, lon, info]
+        'INSERT INTO phone (nom, marque, note, prix, ecran, image, photo, indice, utilisation, eco) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+        [nom, marque, note, prix, ecran, image, photo, indice, utilisation, eco]
       );
 
-    res.status(201).send({
-      id: insertId,
+    res.send({
       nom,
-      categorie,
-      voie,
-      code_postal,
-      commune,
-      lat,
-      lon,
-      info,
+      marque,
+      note,
+      prix,
+      ecran,
+      image,
+      photo,
+      indice,
+      utilisation,
+      eco,
     });
   } catch (err) {
     console.error(err);
-    res.sendStatus(500);
+    res.status(500).send('Something bad happened');
   }
 });
-// SUPPRIMER UNE QUOTE AVEC DELETE
 
-app.delete('/point/:id', (req, res) => {
-  const pointId = req.params.id;
+// SUPPRIMER UN SMARTPHONE AVEC DELETE
+
+app.delete('/phone/:id', (req, res) => {
+  const phoneId = req.params.id;
   connection.query(
-    'DELETE FROM point WHERE id = ?',
-    [pointId],
+    'DELETE FROM phone WHERE id = ?',
+    [phoneId],
     (err, result) => {
       if (err) {
         console.error(err);
         res.status(500).send('Error deleting a quote');
       } else {
-        res.sendStatus(204);
+        res.sendStatus(204).send('Phone deleted successfully... :(');
       }
     }
   );
 });
 
-app.get('/category-point/:categories', (req, res) => {
-  console.log(req.params);
-  connection
-    .promise()
-    .query('SELECT * FROM point WHERE categorie = ?', req.params.categories)
-    .then((result) => {
-      res.status(200).send(result[0]);
-      console.log(result[0]);
-    })
-    .catch((er) => {
-      console.log(er);
-    });
+// MODIFIER UNE INFO
+
+app.put('/phone/:id', (req, res) => {
+  const phoneId = req.params.id;
+  const phonePropsToUpdate = req.body;
+  connection.query(
+    'UPDATE phone SET ? WHERE id = ?',
+    [phonePropsToUpdate, phoneId],
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error updating a album');
+      } else {
+        res.status(200).send('Phone caracteristic updated successfully 🎉');
+      }
+    }
+  );
 });
 
 module.exports.app = app;
