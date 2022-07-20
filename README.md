@@ -1,10 +1,14 @@
 # Setup
 
+test
 Install dependencies :
+
 ```sh
 npm i
 ```
-Copy the environment variables : 
+
+Copy the environment variables :
+
 ```
 cp .env.example .env
 ```
@@ -16,7 +20,7 @@ If you ever want to add an environment variable, please add them to `src/environ
 
 ## Develop
 
-This will start the server and reload it when one source file changes : 
+This will start the server and reload it when one source file changes :
 
 ```sh
 npm run dev
@@ -30,9 +34,10 @@ npm start
 
 ## Run the tests
 
-```sh
+````sh
 npm run test
 ```# quelsmartphone-CP4-api
 # quelsmartphone-CP4-api
 # quelsmartphone-CP4-api
 # CP4-api
+````
