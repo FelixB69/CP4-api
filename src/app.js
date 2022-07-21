@@ -9,15 +9,16 @@ app.use(express.json());
 app.use(cors());
 
 // FAIRE AFFICHER LES SMARTPHONES
-app.get('/phone', async (req, res) => {
-  try {
-    const [phone] = await db.promise().query('SELECT * FROM phone');
-    res.send(phone);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('something wrong happened');
-  }
-});
+// app.get('/phone', async (req, res) => {
+//   try {
+
+//     const [phone] = await db.promise().query('SELECT * FROM phone');
+//     res.send(phone);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send('something wrong happened');
+//   }
+// });
 
 app.get('/phone/:id', (req, res) => {
   const phoneId = req.params.id;
@@ -29,7 +30,7 @@ app.get('/phone/:id', (req, res) => {
         console.error(err);
         res.status(500).send('Error retrieving point from database');
       } else if (result.length === 0) {
-        res.status(404).send('Point not found');
+        res.status(404).send('Phone not found');
       } else {
         res.json(result[0]);
       }
@@ -37,7 +38,41 @@ app.get('/phone/:id', (req, res) => {
   );
 });
 
+// app.get('/phone', async (req, res) => {
+//   console.log('/phone');
+//   const { marque } = req.query;
+//   const sql = ['SELECT * FROM phone', marque && 'WHERE marque = ?']
+//     .filter(Boolean)
+//     .join(' ');
+
+//   try {
+//     const [phone] = await db.promise().query(sql, [marque].filter(Boolean));
+//     res.send(phone);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send('something wrong happened');
+//   }
+// });
+
+app.get('/phone', async (req, res) => {
+  const { marque } = req.query;
+  let sql = 'SELECT * FROM phone';
+  const valuesToEscape = [];
+  if (marque) {
+    sql += ' WHERE marque = ?';
+    valuesToEscape.push(marque);
+  }
+  try {
+    const [phone] = await db.promise().query(sql, valuesToEscape);
+    res.send(phone);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('something wrong happened');
+  }
+});
+
 // AJOUTER UN SMARTPHONE AVEC POST
+
 app.post('/phone', async (req, res) => {
   try {
     const {
@@ -60,6 +95,7 @@ app.post('/phone', async (req, res) => {
       );
 
     res.send({
+      id,
       nom,
       marque,
       note,
@@ -87,9 +123,9 @@ app.delete('/phone/:id', (req, res) => {
     (err, result) => {
       if (err) {
         console.error(err);
-        res.status(500).send('Error deleting a quote');
+        res.status(500).send('Error deleting a phone');
       } else {
-        res.sendStatus(204).send('Phone deleted successfully... :(');
+        res.status(204).send('Phone deleted successfully... :(');
       }
     }
   );
@@ -106,7 +142,7 @@ app.put('/phone/:id', (req, res) => {
     (err, result) => {
       if (err) {
         console.error(err);
-        res.status(500).send('Error updating a album');
+        res.status(500).send('Error updating a phone');
       } else {
         res.status(200).send('Phone caracteristic updated successfully 🎉');
       }
